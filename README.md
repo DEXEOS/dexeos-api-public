@@ -34,6 +34,41 @@ cancelled                   <cancelled and no amount was filled
 
 
 
+# Place an order
+Be careful when you place an order to buy, if total price have you must calculate with Math.ceil.
+
+ex) if total_price is 0.00321 EOS, you must send 0.0033 EOS. You will get 9,000 PEN instead.
+
+Place an order to buy
+```javascript
+const memo = {
+  "type":"buy",
+  "quantity":"1000",
+  "price":"0.0001",
+  "code":"betdicetoken",
+  "symbol":"DICE"
+};
+eosjs.transfer("<your_eos_account>", "dexeoswallet", "0.1000 EOS", JSON.stringify(memo))
+  .then(...)
+  .catch(...);
+```
+
+Place an order to sell
+```javascript
+const memo = {
+  "type":"sell",
+  "quantity":"1000",
+  "price":"0.0001",
+  "code":"betdicetoken",
+  "symbol":"DICE"
+};
+eosjs.transaction("betdicetoken", tr => {
+  tr.transfer("<your_eos_account>", "dexeoswallet", "1000.0000 DICE", JSON.stringify(memo));
+})
+  .then(...)
+  .catch(...);
+```
+
 # Token / Price List
 summary is last 24 hours from current time.
 
