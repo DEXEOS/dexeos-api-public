@@ -69,6 +69,19 @@ eosjs.transaction("betdicetoken", tr => {
   .catch(...);
 ```
 
+# Cancel an order
+
+```javascript
+eosjs.transaction("dexeoswallet", tr => {
+  tr.cancelorder({
+    owner: "<your_eos_account>",
+    tradepk: 11111 // trade_pk from your open orders.
+  });
+})
+  .then(...)
+  .catch(...);
+```
+
 # Token / Price List
 summary is last 24 hours from current time.
 
