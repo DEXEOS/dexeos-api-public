@@ -202,6 +202,24 @@ Response
 ]
 ```
 
+# Order Book
+ALL ``GET - /orderbook/<code>::<symbol>``
+
+Response
+```
+[
+  {
+  "type"          :<String>,
+  "code"          :<String>,
+  "symbol"        :<String>,
+  "quantity"      :<Number>,
+  "amount"        :<Number>,
+  "per_eos"       :<Number>,
+  "remain_amount" :<Number>
+  }
+]
+```
+
 # MQTT Server - Realtime price and order change updates
 We recommend to use this for all realtime updates instead of setTimeout on http endpoint
 
