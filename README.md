@@ -278,4 +278,30 @@ Response
 }
 ```
 
+# MQTT Example - Node.JS
+```
+//This example listens for changes in price for BLACK token. 
+//Changes are push immediately when a price change occurs. 
+
+const url = "wss://mqtt.dexeos.io/mqtt"; //wss for browsers, use tcp for backend
+const mqtt = require('mqtt');
+const client  = mqtt.connect(url);
+
+const blackPriceEndPoint = "/global/eosblackteam::BLACK/price";
+client.on('connect', ()=> {
+  client.subscribe(blackPriceEndPoint, (err)=>{
+    if(err){
+      //handle if there's any error.
+    }
+  })
+});
+
+client.on('message', (topic, message)=>{
+  if(topic===blackPriceEndPoint){
+    console.log(message.toString());
+  }
+})
+
+```
+
 
