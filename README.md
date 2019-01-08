@@ -6,7 +6,7 @@ Current http endpoint: ``https://api.dexeos.io/v2/<endpoint>``
 
 Current mqtt endpoint wss: ``wss://mqtt.dexeos.io/mqtt``
 
-Current mqtt endpoint tcp: ``tcp://mqtt.dexeos.io:1883``
+Current mqtt endpoint tcp: ``tcp://tcpmqtt.dexeos.io:1883``
 
 We recommend using mqtt is you wish to listen for changes instead of sending requests every few seconds to the http api endpoint. 
 
