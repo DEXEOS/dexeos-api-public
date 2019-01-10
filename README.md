@@ -155,6 +155,11 @@ Response
 # Order History
 ``GET - /orderhistory/<account>``
 
+The limit is 150txs per request. If you want more add skip param in the url
+
+```e.g. /orderhistory/dexeoswallet?skip=150```
+
+
 Response
 ```
 [
@@ -181,6 +186,11 @@ Response
 ALL ``GET - /transaction/<account>``
 
 ONE TOKEN ``GET - /transaction/<account>/<code>::<symbol>``
+
+The limit is 150txs per request. If you want more add skip param in the url
+
+```e.g. /transaction/dexeoswallet?skip=150```
+
 
 Response
 ```
