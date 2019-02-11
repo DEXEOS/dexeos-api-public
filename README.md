@@ -10,6 +10,8 @@ Current mqtt endpoint tcp: ``tcp://tcpmqtt.dexeos.io:1883``
 
 We recommend using mqtt is you wish to listen for changes instead of sending requests every few seconds to the http api endpoint. 
 
+To prevent abuse of the API please note too many requests per second to the API will result in IP address getting blocked temporarily.
+
 Content-Type: ``application/json``
 
 # Keywords
