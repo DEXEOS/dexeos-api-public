@@ -8,29 +8,25 @@ MQTT Endpoint (WSS) | ``wss://mqtt.dexeos.io/mqtt``
 MQTT Endpoint (TCP) | ``tcp://tcpmqtt.dexeos.io:1883``
 Content-Type | ``application/json``
 
-Korean documentation: [한국어 문서로 이동](./README-ko.md)
+## 시작하기 전에
+몇 초 주기로 데이터를 받아오는 작업을 하고자 할 때 HTTP 요청 대신 MQTT를 사용하시는 것을 권장합니다. 초당 많은 API 요청을 보내는 경우, 어뷰징을 막기 위해 일시적으로 접속 IP를 차단할 수 있음을 알려드립니다.
 
-## Before you start
-We recommend using mqtt is you wish to listen for changes instead of sending requests every few seconds to the http api endpoint. 
+## 키워드
 
-To prevent abuse of the API please note too many requests per second to the API will result in IP address getting blocked temporarily.
-
-## Keywords
-
-- ``<code>`` means contract name e.g ``eosio.token``
-- ``<symbol>`` means symbol in real caps e.g. ``EOS``
-- ``<account>`` means eos account name e.g ``dexeoswallet``
+- ``<code>`` 는 토큰 코드를 의미합니다. 예: ``eosio.token``
+- ``<symbol>`` 은 토큰 심볼(대문자)를 의미합니다. 예:  ``EOS``
+- ``<account>`` 는 EOS 계정 이름을 의미합니다. 예:  ``dexeoswallet``
 
 ## Types / Enums
 
-``<Market>`` - ``string`` type.
+``<Market>`` - 데이터형: ``string``
 
 Key | Type
 ---- | ----
 `eos` | ``String``
 `cusd` | ``String``
 
-``<TXType>`` - ``string`` type.
+``<TXType>`` - 데이터형: ``string``
 
 Key | Type
 ---- | ----
@@ -43,28 +39,28 @@ Key | Type
 
 Format | Description
 ---- | ----
-``yyyymmddhhmm`` | Year(4), Month(2), Day(2), Hours(2), Minutes(2)
+``yyyymmddhhmm`` | 연도(4), 월(2), 일(2), 시(2), 분(2)
 
 
 ``<Status>``
 
 Key | Type | Description
 ---- | ---- | ----
-`open` | ``String`` | On order
-`pending` | ``String`` | Still revisible
-`partially_filled` | ``String`` | Some amount has been filled
-`complete` | ``String`` | All amount has been filled
-`cancelled` | ``String`` | Cancelled and no amount was filled
-`cancelled_partially_filled` | ``String`` | Cancelled but some amount was filled
+`open` | ``String`` | 주문 중
+`pending` | ``String`` | Confirm 되지 않은 트랜잭션
+`partially_filled` | ``String`` | 일부 수량에 한해 거래가 체결됨
+`complete` | ``String`` | 모든 수량 거래 체결됨
+`cancelled` | ``String`` | 취소됨
+`cancelled_partially_filled` | ``String`` | 일부 수량에 한해 체결되었으나 취소됨
 
 
 
 ## Contents
 
-#### Place/Cancel Order
+#### 주문 트랜잭션/취소
 
-* [About fee](#about-fee)
-* [Place an order](#place-an-order)
+* [수수료에 대하여](#수수료에-대하여)
+* [주문하기](#주문하기)
 
 #### DEXEOS Public API
 
@@ -78,7 +74,7 @@ Key | Type | Description
 * [Get USDT value](#get-usdt-value)
 * [Get fee info](#get-fee-info)
 
-#### DEXEOS Chart API
+#### DEXEOS 차트 API
 
 * [Chart data](#chart-data)
  
@@ -91,40 +87,41 @@ Key | Type | Description
 
 ## Place/Cancel Order
 
-### About fee
+### 수수료에 대하여
 
-\* Please beaware, DEXEOS charges **fee** for buy/sell transaction.
+\* DEXEOS는 토큰 구매 혹은 판매 시 **수수료**를 부과합니다.
 
 Category | Amount
 ---- | ----
-General user | `0.1%`
-Whitelisted user | `0.0%`
-Some of special accounts | `-`
+일반 | `0.1%`
+화이트리스트 | `0.0%`
+일부 특별한 계정 | `계정에 따라 다름`
 
-### Place an order
+### 주문하기
 
-Please be careful about fee. For example if you want to buy something with `1.0000 EOS`, send `1.001 EOS` to `dexeoswallet` (for `0.1%` fee). If you want buy something with `1.0000 EOS` exactly, you have to reduce quantity of token what you want, for fit to `1.0000 EOS`.
+수수료가 부과되는 점을 유의하여 주문을 넣으셔야 합니다. 예를 들면, 어떤 토큰을 `1.0000 EOS`에 구매하시고자 한다면, 수수료를 포함하여 총 `1.001 EOS`를 보내셔야 합니다 (`0.1%` 수수료일 때). 정확하게 `1.0000 EOS`에 맞춰 구매하시려면 직접 토큰 구매량이나 가격을 조절하셔야 합니다.
 
 
 #### Example (node.js)
 
-See [Order Example](./Order%20Example).
+[Order Example](./Order%20Example) 을 참고하여 주세요.
 
 
 ## DEXEOS Public API
 
 ### Token info
+토큰 정보
 
 #### Request
 
 Description | Method | Path
 ---- | ---- | ----
-Get all tokens | ``GET`` | ``/token``
-Get one token | ``GET`` | ``/token/<code>::<symbol>``
+모든 토큰 정보 | ``GET`` | ``/token``
+한 개의 토큰 정보 | ``GET`` | ``/token/<code>::<symbol>``
 
 #### Response
 
-Array of ``<TokenInfo>``.
+``<TokenInfo>`` 객체의 배열.
 
 ``<TokenInfo>``
 
@@ -138,7 +135,7 @@ Key | Type | Example
 ``name`` | ``String`` | "EOS"
 ``summary`` | ``<Summary>`` | -
 
-``<Summary>`` - ``summary`` is last 24 hours from current time.
+``<Summary>`` - ``summary`` 는 현재 시간으로부터 24시간까지의 데이터를 가지고 있습니다.
 
 Key | Type | Example
 ---- | ---- | ----
@@ -152,13 +149,14 @@ Key | Type | Example
 `last_tx_type` | ``<TXType>`` | "sell"
 
 ### Open orders
+미체결 주문 내역
 
 #### Request
 
 Description | Method | Path
 ---- | ---- | ----
-Get all tokens | ``GET`` | ``/order/<account>``
-Get one token | ``GET`` | ``/order/<account>/<code>::<symbol>``
+모든 토큰에 대한 정보 | ``GET`` | ``/order/<account>``
+한 개의 토큰에 대한 정보 | ``GET`` | ``/order/<account>/<code>::<symbol>``
 
 #### Parameters
 
@@ -169,7 +167,7 @@ API | Name | Type | Required | Example
 
 #### Response
 
-Array of ``<OpenOrder>``.
+``<OpenOrder>`` 객체의 배열.
 
 ``<OpenOrder>``
 
@@ -191,11 +189,13 @@ Key | Type | Example
 
 ### On order summary
 
+<주문 중> 요약
+
 #### Request
 
 Description | Method | Path
 ---- | ---- | ----
-Onorder summary | ``GET`` | ``/onorder/<account>``
+주문 중 요약 | ``GET`` | ``/onorder/<account>``
 
 #### Parameters
 
@@ -206,7 +206,7 @@ API | Name | Type | Required | Example
 
 #### Response
 
-Array of ``<OnOrderSummary>``.
+``<OnOrderSummary>`` 객체의 배열.
 
 ``<OnOrderSummary>``
 
@@ -218,14 +218,15 @@ Key | Type | Example
 ``total_quantity`` | ``Number`` | 1
 
 ### Order history
+주문 내역
 
 #### Request
 
 Description | Method | Path
 ---- | ---- | ----
-Order History* | ``GET`` | ``/orderhistory/<account>``
+주문 내역* | ``GET`` | ``/orderhistory/<account>``
 
-\* The limit is `150 transactions` per request. If you want to load more, add `skip` parameter.
+\* 요청당 `150 트랜잭션`으로 제한됩니다. 더 불러오려면, 파라메터에 `skip` 및 값을 추가해야 합니다.
 
 #### Parameters
 
@@ -236,7 +237,7 @@ API | Name | Type | Required | Example
 
 #### Response
 
-Array of ``<OrderHistory>``.
+``<OrderHistory>`` 객체의 배열.
 
 ``<OrderHistory>``
 
@@ -259,14 +260,15 @@ Key | Type | Example
 ``remain_amount`` | ``Number`` | 2
 
 ### Transaction history
+트랜잭션 내역
 
 #### Request
 
 Description | Method | Path
 ---- | ---- | ----
-Transaction history* | ``GET`` | ``/transaction/<account>``
+트랜잭션 내역* | ``GET`` | ``/transaction/<account>``
 
-\* The limit is `150 transactions` per request. If you want to load more, add `skip` parameter.
+\* 요청당 `150 트랜잭션`으로 제한됩니다. 더 불러오려면, 파라메터에 `skip` 및 값을 추가해야 합니다.
 
 #### Parameters
 
@@ -277,7 +279,7 @@ API | Name | Type | Required | Example
 
 #### Response
 
-Array of ``<TransactionHistory>``.
+``<TransactionHistory>`` 객체의 배열.
 
 ``<TransactionHistory>``
 
@@ -300,11 +302,13 @@ Key | Type | Example
 
 ### Trade history
 
+거래 내역
+
 #### Request
 
 Description | Method | Path
 ---- | ---- | ----
-Trade history | ``GET`` | ``/tradehistory/<code>::<symbol>``
+거래 내역 | ``GET`` | ``/tradehistory/<code>::<symbol>``
 
 #### Parameters
 
@@ -314,15 +318,17 @@ API | Name | Type | Required | Example
 
 #### Response
 
-Array of ``<TransactionHistory>``. see [Transaction History](#transaction-history)'s data type.
+``<TransactionHistory>`` 객체의 배열. 데이터 타입은 [Transaction History](#transaction-history) 을 참고하세요.
 
 ### Orderbook
+
+호가 목록
 
 #### Request
 
 Description | Method | Path
 ---- | ---- | ----
-Orderbook | ``GET`` | ``/orderbook/<code>::<symbol>``
+호가 목록 | ``GET`` | ``/orderbook/<code>::<symbol>``
 
 #### Parameters
 
@@ -333,7 +339,7 @@ API | Name | Type | Required | Example
 
 #### Response
 
-Array of ``<OrderBook>``.
+``<OrderBook>`` 객체의 배열.
 
 ``<OrderBook>``
 
@@ -349,17 +355,19 @@ Key | Type | Example
 
 ### Get USDT value
 
+USDT 값
+
 #### Request
 
 Description | Method | Path
 ---- | ---- | ----
-USDT value* | ``GET`` | ``/usdt``
+USDT 값* | ``GET`` | ``/usdt``
 
-\* If you want to fetch USDT info repeatedly, use **MQTT API**.
+\* 지속적으로 값을 갱신해야 한다면, **MQTT API**를 사용하세요.
 
 #### Response
 
-``<CurrencyInfo>``
+``<CurrencyInfo>`` 객체.
 
 Key | Type | Example
 ---- | ---- | ----
@@ -367,15 +375,17 @@ Key | Type | Example
 
 ### Get fee info
 
+수수료 정보
+
 #### Request
 
 Description | Method | Path
 ---- | ---- | ----
-Fee information | ``GET`` | ``/fee/<account>``
+수수료 정보 | ``GET`` | ``/fee/<account>``
 
 #### Response
 
-``<FeeInfo>``
+``<FeeInfo>`` 객체.
 
 Key | Type | Example
 ---- | ---- | ----
@@ -387,13 +397,13 @@ Key | Type | Example
 
 ### Chart data
 
-\* **Use** chart (chart.dexeos.io) endpoint.
+\* Endpoint로 **chart.dexeos.io** 를 사용하세요.
 
 #### Request
 
 Description | Method | Path
 ---- | ---- | ----
-Get chart data | ``GET`` | ``/chart``
+차트 데이터 | ``GET`` | ``/chart``
 
 #### Parameters
 
@@ -419,7 +429,7 @@ Value | Type
 
 #### Response
 
-Array of ``<ChartData>``.
+``<ChartData>`` 객체의 배열.
 
 ``<ChartData>``
 
@@ -440,28 +450,32 @@ Key | Type | Example
 
 ### On new order event
 
+신규 주문 발생 이벤트
+
 #### Subscription
 
 Description | Topic
 ---- | ----
-On new order event | ``/global/<account>/order``
+신규 주문 발생 이벤트 | ``/global/<account>/order``
 
 #### Response
 
-a ``<OpenOrder>`` object. See [Open orders](#open-orders).
+``<OpenOrder>`` 객체. 데이터 타입은 [Open orders](#open-orders) 를 참고하세요.
 
 
 ### On one token price change
 
+토큰 가격 변동 이벤트
+
 #### Subscription
 
 Description | Topic
 ---- | ----
-On token price changes | ``/global/<code>::<symbol>/price``
+토큰 가격 변동 | ``/global/<code>::<symbol>/price``
 
 #### Response
 
-``<OneTokenPriceInfo>``
+``<OneTokenPriceInfo>`` 객체.
 
 Key | Type | Example
 ---- | ---- | ----
@@ -470,23 +484,28 @@ Key | Type | Example
 
 ### On all tokens price changes
 
+전체 토큰 가격 변동 이벤트
+
 #### Subscription
 
 Description | Topic
 ---- | ----
-On **ALL** tokens price changes | ``/global/price``
+**전체** 토큰 정보 | ``/global/price``
 
 #### Response
 
-``<TokenInfo>`` object. See [Token info](#token-info).
+``<TokenInfo>`` 객체. 데이터 타입은 [Token info](#token-info) 를 참고하세요.
+
 
 ### On USDT value change
+
+USDT 값 변동 이벤트
 
 #### Subscription
 
 Description | Topic
 ---- | ----
-On USDT value change | ``/global/usdt``
+USDT 값 변동 | ``/global/usdt``
 
 #### Response
 

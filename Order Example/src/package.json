@@ -1,0 +1,8 @@
+{
+    "dependencies": {
+      "@babel/runtime": "^7.0.0-beta.55",
+      "eosjs": "^16.0.9",
+      "scatterjs-core": "^2.7.16",
+      "scatterjs-plugin-eosjs": "^1.5.1"
+    }
+  }  
