@@ -77,6 +77,7 @@ Key | Type | Description
 * [Orderbook](#orderbook)
 * [Get USDT value](#get-usdt-value)
 * [Get fee info](#get-fee-info)
+* [Get whitelisted info](#get-whitelisted-info)
 
 #### DEXEOS Chart API
 
@@ -367,11 +368,13 @@ Key | Type | Example
 
 ### Get fee info
 
+\* The `<account>` is referrer account.
+
 #### Request
 
 Description | Method | Path
 ---- | ---- | ----
-Fee information | ``GET`` | ``/fee/<account>``
+Fee information | ``GET`` | ``/feep/<account>``
 
 #### Response
 
@@ -379,8 +382,27 @@ Fee information | ``GET`` | ``/fee/<account>``
 
 Key | Type | Example
 ---- | ---- | ----
-``account`` | ``String`` | "letsplay.hos"
+``account`` | ``String`` | "dexeoswallet"
 ``percent`` | ``Number`` | 0.1
+
+### Get whitelisted info
+
+\* The `<account>` is DEXEOS user account.
+
+#### Request
+
+Description | Method | Path
+---- | ---- | ----
+Whitelisted information | ``GET`` | ``/fee/<account>``
+
+#### Response
+
+``<WhitelistedInfo>``
+
+Key | Type | Example
+---- | ---- | ----
+``account`` | ``String`` | "letsplay.hos"
+``no_fee`` | ``Boolean`` | false
 
 
 ## DEXEOS Chart API

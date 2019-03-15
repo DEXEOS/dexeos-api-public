@@ -9,7 +9,7 @@ MQTT Endpoint (TCP) | ``tcp://tcpmqtt.dexeos.io:1883``
 Content-Type | ``application/json``
 
 ## 시작하기 전에
-몇 초 주기로 데이터를 받아오는 작업을 하고자 할 때 HTTP 요청 대신 MQTT를 사용하시는 것을 권장합니다. 초당 많은 API 요청을 보내는 경우, 어뷰징을 막기 위해 일시적으로 접속 IP를 차단할 수 있음을 알려드립니다.
+일정한 주기로 데이터를 받아오는 작업을 하고자 할 때는 HTTP 요청 대신 MQTT를 사용하시는 것을 권장합니다. 초당 많은 API 요청을 보내는 경우, 어뷰징을 막기 위해 일시적으로 접속 IP를 차단할 수 있음을 알려드립니다.
 
 ## 키워드
 
@@ -73,8 +73,9 @@ Key | Type | Description
 * [Orderbook](#orderbook)
 * [Get USDT value](#get-usdt-value)
 * [Get fee info](#get-fee-info)
+* [Get whitelisted info](#get-whitelisted-info)
 
-#### DEXEOS 차트 API
+#### DEXEOS Chart API
 
 * [Chart data](#chart-data)
  
@@ -375,13 +376,15 @@ Key | Type | Example
 
 ### Get fee info
 
-수수료 정보
+레퍼러 수수료 정보
+
+\* `<account>` 는 유저 계정이 아닌 레퍼러 계정을 의미합니다.
 
 #### Request
 
 Description | Method | Path
 ---- | ---- | ----
-수수료 정보 | ``GET`` | ``/fee/<account>``
+레퍼러 수수료 정보 | ``GET`` | ``/feep/<account>``
 
 #### Response
 
@@ -389,8 +392,29 @@ Description | Method | Path
 
 Key | Type | Example
 ---- | ---- | ----
-``account`` | ``String`` | "letsplay.hos"
+``account`` | ``String`` | "dexeoswallet"
 ``percent`` | ``Number`` | 0.1
+
+### Get whitelisted info
+
+화이트리스트 등록 여부
+
+\* `<account>` 는 DEXEOS 유저 계정을 의미합니다.
+
+#### Request
+
+Description | Method | Path
+---- | ---- | ----
+화이트리스트 등록 여부 정보 | ``GET`` | ``/fee/<account>``
+
+#### Response
+
+``<WhitelistedInfo>`` 객체.
+
+Key | Type | Example
+---- | ---- | ----
+``account`` | ``String`` | "letsplay.hos"
+``no_fee`` | ``Boolean`` | false
 
 
 ## DEXEOS Chart API
