@@ -112,7 +112,7 @@ CUSD | `10.0`
 
 ### Place an order
 
-Please be careful about fee. For example if you want to buy something with `1.0000 EOS`, send `1.001 EOS` to `dexeoswallet` (for `0.1%` fee). If you want buy something with `1.0000 EOS` exactly, you have to reduce quantity of token what you want, for fit to `1.0000 EOS`.
+Please be careful about fee. For example if you placed an order for buy a token, you will receive token what you want to buy and it will off by fee. If you sell, you will also receive token which calculated with fee. If you want buy some token exactly, you have to reduce or increase quantity of token what you want.
 
 #### Example (node.js)
 
