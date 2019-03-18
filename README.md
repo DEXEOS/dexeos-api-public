@@ -20,6 +20,7 @@ To prevent abuse of the API please note too many requests per second to the API 
 - ``<code>`` means contract name e.g ``eosio.token``
 - ``<symbol>`` means symbol in real caps e.g. ``EOS``
 - ``<account>`` means eos account name e.g ``dexeoswallet``
+- ``?`` keyword is for an optional value.
 
 ## Types / Enums
 
@@ -27,8 +28,8 @@ To prevent abuse of the API please note too many requests per second to the API 
 
 Key | Type
 ---- | ----
-`eos` | ``String``
-`cusd` | ``String``
+`EOS` | ``String``
+`CUSD` | ``String``
 
 ``<TXType>`` - ``string`` type.
 
@@ -100,12 +101,18 @@ Category | Amount
 ---- | ----
 General user | `0.1%`
 Whitelisted user | `0.0%`
-Some of special accounts | `-`
+Some of referral accounts | `by account`
+
+\* Be careful for minimum order amount.
+
+Market | Minimum order amount
+---- | ----
+EOS | `0.1`
+CUSD | `10.0`
 
 ### Place an order
 
 Please be careful about fee. For example if you want to buy something with `1.0000 EOS`, send `1.001 EOS` to `dexeoswallet` (for `0.1%` fee). If you want buy something with `1.0000 EOS` exactly, you have to reduce quantity of token what you want, for fit to `1.0000 EOS`.
-
 
 #### Example (node.js)
 
@@ -134,7 +141,7 @@ Key | Type | Example
 ``pk`` | ``Number`` | 79
 ``code`` | ``String`` | "eosio.token"
 ``symbol`` | ``String`` | "EOS"
-``market`` | ``<Market>`` | "cusd"
+``market`` | ``<Market>`` | "CUSD"
 ``decimals`` | ``Number`` | 4
 ``name`` | ``String`` | "EOS"
 ``summary`` | ``<Summary>`` | -
@@ -147,7 +154,7 @@ Key | Type | Example
 `low` | ``Number`` | 0.01523
 `volume` | ``Number`` | 15237.2317432
 `volume_per_market` | ``Number`` | 0.123612
-`market` | ``<Market>`` | "eos"
+`market` | ``<Market>`` | "EOS"
 `percent` | ``Number`` | 0.12
 `last_price` | ``Number`` | 3
 `last_tx_type` | ``<TXType>`` | "sell"
@@ -165,7 +172,7 @@ Get one token | ``GET`` | ``/order/<account>/<code>::<symbol>``
 
 API | Name | Type | Required | Example
 ---- | ---- | ---- | ---- | ----
-``/order`` | ``market`` | ``<Market>`` | ``*`` | "eos"
+``/order`` | ``market`` | ``<Market>`` | ``*`` | "EOS"
 
 
 #### Response
@@ -188,7 +195,7 @@ Key | Type | Example
 ``per_token`` | ``Number`` | 100
 ``update_date`` | ``String`` | "2019-02-12T05:20:12Z"
 ``register_date`` | ``String`` | "2019-02-12T05:20:12Z"
-``market`` | ``<Market>`` | "eos"
+``market`` | ``<Market>`` | "EOS"
 
 ### On order summary
 
@@ -202,7 +209,7 @@ Onorder summary | ``GET`` | ``/onorder/<account>``
 
 API | Name | Type | Required | Example
 ---- | ---- | ---- | ---- | ----
-``/onorder`` | ``market`` | ``<Market>`` | | "eos"
+``/onorder`` | ``market`` | ``<Market>`` | | "EOS"
 
 
 #### Response
@@ -215,7 +222,7 @@ Key | Type | Example
 ---- | ---- | ----
 ``code`` | ``String`` | "betdicetoken"
 ``symbol`` | ``String`` | "DICE"
-``market`` | ``<Market>`` | "cusd"
+``market`` | ``<Market>`` | "CUSD"
 ``total_quantity`` | ``Number`` | 1
 
 ### Order history
@@ -255,7 +262,7 @@ Key | Type | Example
 ``per_token`` | ``Number`` | 1000000
 ``update_date`` | ``String`` | "2019-02-27T11:26:02Z"
 ``register_date`` | ``String`` | "2019-02-27T11:26:02Z"
-``market`` | ``<Market>`` | "eos"
+``market`` | ``<Market>`` | "EOS"
 ``status`` | ``<Status>`` | "open"
 ``remain_amount`` | ``Number`` | 2
 
@@ -274,7 +281,7 @@ Transaction history* | ``GET`` | ``/transaction/<account>``
 API | Name | Type | Required | Example
 ---- | ---- | ---- | ---- | ----
 ``/transaction`` | ``skip`` | ``Number`` | | 150
-| | ``market`` | ``<Market>`` | | "eos"
+| | ``market`` | ``<Market>`` | | "EOS"
 
 #### Response
 
@@ -293,7 +300,7 @@ Key | Type | Example
 ``buyer_account_name`` | ``String`` | "abcdefg12345"
 ``code`` | ``String`` | "betdicetoken"
 ``symbol`` | ``String`` | "DICE"
-``market`` | ``<Market>`` | "eos"
+``market`` | ``<Market>`` | "EOS"
 ``quantity`` | ``Number`` | 0.75
 ``per_token`` | ``Number`` | 0.1
 ``update_date`` | ``String`` | "2019-02-23T12:55:58Z"
@@ -311,7 +318,7 @@ Trade history | ``GET`` | ``/tradehistory/<code>::<symbol>``
 
 API | Name | Type | Required | Example
 ---- | ---- | ---- | ---- | ----
-``/tradehistory`` | ``market`` | ``<Market>`` | | "eos"
+``/tradehistory`` | ``market`` | ``<Market>`` | | "EOS"
 
 #### Response
 
@@ -329,7 +336,7 @@ Orderbook | ``GET`` | ``/orderbook/<code>::<symbol>``
 
 API | Name | Type | Required | Example
 ---- | ---- | ---- | ---- | ----
-``/orderbook`` | ``market`` | ``<Market>`` | ``*`` | "eos"
+``/orderbook`` | ``market`` | ``<Market>`` | ``*`` | "EOS"
 
 
 #### Response
@@ -401,7 +408,7 @@ Whitelisted information | ``GET`` | ``/fee/<account>``
 
 Key | Type | Example
 ---- | ---- | ----
-``account`` | ``String`` | "letsplay.hos"
+``account`` | ``String`` | "yousoroserup"
 ``no_fee`` | ``Boolean`` | false
 
 
@@ -426,7 +433,7 @@ API | Name | Type | Required | Example
 | | ``resolution`` | ``<Resolution>`` | ``*`` | 30
 | | ``from`` | ``<Date>`` | ``*`` | 201809051521
 | | ``to`` | ``<Date>`` | ``*`` | 201903041522
-| | ``market`` | ``<Market>`` | ``*`` | "eos"
+| | ``market`` | ``<Market>`` | ``*`` | "EOS"
 
 ``<Resolution>``
 
@@ -454,7 +461,7 @@ Key | Type | Example
 ``volume`` | ``Number`` | 2
 ``symbol`` | ``String`` | "CUSD"
 ``code`` | ``String`` | "stablecarbon"
-``market`` | ``<Market>`` | "eos"
+``market`` | ``<Market>`` | "EOS"
 ``timestamp`` | ``String`` | "2018-12-30T03:00:00Z"
 
 
