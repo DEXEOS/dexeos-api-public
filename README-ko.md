@@ -11,6 +11,10 @@ Content-Type | ``application/json``
 ## 시작하기 전에
 일정한 주기로 데이터를 받아오는 작업을 하고자 할 때는 HTTP 요청 대신 MQTT를 사용하시는 것을 권장합니다. 초당 많은 API 요청을 보내는 경우, 어뷰징을 막기 위해 일시적으로 접속 IP를 차단할 수 있음을 알려드립니다.
 
+## DEXEOS embed trade API
+DEXEOS 거래 페이지를 DAPP에 임베드하고자 한다면, [DEXEOS embed trade API](https://github.com/DEXEOS/dexeos-embed-trade) 를 사용하세요.
+
+
 ## 키워드
 
 - ``<code>`` 는 토큰 코드를 의미합니다. 예: ``eosio.token``

@@ -15,6 +15,9 @@ We recommend using mqtt is you wish to listen for changes instead of sending req
 
 To prevent abuse of the API please note too many requests per second to the API will result in IP address getting blocked temporarily.
 
+## DEXEOS embed trade API
+If you want to embed DEXEOS trade page in your own dapp, use [DEXEOS embed trade API](https://github.com/DEXEOS/dexeos-embed-trade).
+
 ## Keywords
 
 - ``<code>`` means contract name e.g ``eosio.token``
